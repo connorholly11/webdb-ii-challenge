@@ -14,4 +14,8 @@ server.use(express.json());
 server.use(logger);
 server.use("/cars", carsRouter);
 
+server.get("/cars", (req, res) => {
+  res.send("carss");
+});
+
 module.exports = server;
