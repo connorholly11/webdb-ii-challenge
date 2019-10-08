@@ -51,4 +51,39 @@ router.post("/", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const changes = req.body;
+
+  db("cars")
+    .update(changes)
+    .where("id", "=", id)
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: error,
+        message: "500 error on updating car"
+      });
+    });
+});
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+
+  db("cars")
+    .where("id", "=", id)
+    .del()
+    .then(deleted => {
+      res.status(204).json(deleted);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: error,
+        message: "500 error on deleting car"
+      });
+    });
+});
+
 module.exports = router;
